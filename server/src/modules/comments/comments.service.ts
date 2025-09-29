@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { Comment } from 'src/modules/comments/interfaces/comment.interface';
+import { CommentsRepository } from './repositories/comments.repository';
 
 @Injectable()
 export class CommentsService {
-	private readonly comments: Comment[] = []
+	
+	constructor(
+		private readonly commentsRepository: CommentsRepository
+	){}
 
-	findAll(): Comment[]{
-		return this.comments;
+	async findAllComments(): Promise<Comment[]>{
+		return this.commentsRepository.find();
 	}
 }
