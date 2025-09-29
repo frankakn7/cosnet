@@ -1,6 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import { Comment } from 'src/modules/comments/interfaces/comment.interface';
+import { CreateCommentDto } from './dtos/createcomment.dto';
+import { Comment } from './entities/comment.entity';
 
 @Controller('comments')
 export class CommentsController {
@@ -10,5 +11,10 @@ export class CommentsController {
 	@Get()
 	async findAll(): Promise<Comment[]> {
 		return this.commentsService.findAllComments();
+	}
+
+	@Post()
+	async create(@Body() commentDto: CreateCommentDto){
+		return this.commentsService.createComment(commentDto);
 	}
 }
